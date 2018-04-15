@@ -1,4 +1,4 @@
-use "../.."
+use "../../poscy"
 
 class ServerNotify is OSCNotify
   let _out: OutStream
@@ -6,9 +6,12 @@ class ServerNotify is OSCNotify
   new create(out: OutStream) =>
     _out = out
 
-  fun ref received(message: OSCMessage iso) =>
-    let m = consume message
-    _out.print("received: " + m.address)
+  fun ref recv_message(message: OSCMessage) =>
+    _out.print(message.string())
+
+  fun ref recv_bundle(bundle: OSCBundle) =>
+    _out.print("received bundle with " +
+      bundle.elements.size().string() + " elements")
 
   fun ref bad_data(data: Array[U8] val) =>
     _out.print("bad data")

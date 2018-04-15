@@ -1,3 +1,4 @@
+use "debug"
 use "net"
 use "promises"
 
@@ -58,11 +59,13 @@ actor OSCClient
     end
     _connect_promise(this)
 
-  be send(message: OSCMessage val) =>
+  be send(packet: (OSCMessage val | OSCBundle val)) =>
     match _destination
     | let dest: NetAddress =>
       try
-        _sock.write(message.encode()?, dest)
+        _sock.write(packet.encode()?, dest)
+      else
+        Debug("error encoding")
       end
     end
 

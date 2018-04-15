@@ -2,7 +2,10 @@ use "buffered"
 use "net"
 
 interface OSCNotify
-  fun ref received(message: OSCMessage iso) =>
+  fun ref recv_message(message: OSCMessage) =>
+    None
+
+  fun ref recv_bundle(bundle: OSCBundle) =>
     None
 
   fun ref bad_data(data: Array[U8] val) =>
@@ -20,19 +23,18 @@ class _OSCServerUDPNotify is UDPNotify
     from: NetAddress)
   =>
     let data': Array[U8] val = consume data
-    let message: (OSCMessage iso | None) = recover
-      let r: Reader ref = Reader
-      r.append(data')
-      try
-        OSCDecoder(r)?
-      else
-        None
-      end
-    end
+    try
+      let r = recover ref Reader end
 
-    match (consume message)
-    | let m: OSCMessage iso =>
-      _notify.received(consume m)
+      r.append(data')
+      let packet = OSCPacketDecoder(r, data'.size())?
+
+      match packet
+      | let m: OSCMessage =>
+        _notify.recv_message(m)
+      | let b: OSCBundle =>
+        _notify.recv_bundle(b)
+      end
     else
       _notify.bad_data(data')
     end

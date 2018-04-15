@@ -1,4 +1,4 @@
-use "../.."
+use "../../poscy"
 use "debug"
 use "promises"
 
@@ -16,6 +16,19 @@ actor Main
     end
 
   be client_connected(client: OSCClient) =>
-    let m = recover val OSCMessage("/sndbuf/buf/rate").>add(F32(1.0)) end
+    let m = recover val OSCMessage("/hello",
+      recover ["one"
+        F32(2.0)
+        I32(3)
+        U32(4)
+        recover [as U8: 5; 6] end
+        true
+        false
+        None
+        Impulse
+        U64(100)] end)
+    end
     client.send(m)
+    let b = recover val OSCBundle(recover [m] end) end
+    client.send(b)
     client.dispose()
