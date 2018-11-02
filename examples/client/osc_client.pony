@@ -1,5 +1,5 @@
-use "debug"
 use "net"
+use "poscy"
 use "promises"
 
 class _OSCClientUDPNotify is UDPNotify
@@ -64,8 +64,6 @@ actor OSCClient
     | let dest: NetAddress =>
       try
         _sock.write(packet.encode()?, dest)
-      else
-        Debug("error encoding")
       end
     end
 

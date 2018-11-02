@@ -1,5 +1,6 @@
 use "buffered"
 use "net"
+use "poscy"
 
 interface OSCNotify
   fun ref recv_message(message: OSCMessage) =>

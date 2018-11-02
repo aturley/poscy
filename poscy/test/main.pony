@@ -1,6 +1,6 @@
-use ".."
 use "buffered"
 use "ponytest"
+use ".."
 
 actor Main is TestList
   new create(env: Env) => PonyTest(env, this)
@@ -64,7 +64,7 @@ class iso _TestDecodeString is UnitTest
   fun name(): String => "poscy/string_decode"
 
   fun apply(h: TestHelper) ? =>
-    let b = _FlattenToBytes(recover [
+    let b = FlattenToBytes(recover [
       "/a/b/c"; recover [as U8: 0; 0] end
       ",s"; recover [as U8: 0; 0] end
       "hi"; recover [as U8: 0; 0] end
@@ -82,7 +82,7 @@ class iso _TestDecodeI32 is UnitTest
   fun name(): String => "poscy/i32_decode"
 
   fun apply(h: TestHelper) ? =>
-    let b = _FlattenToBytes(recover [
+    let b = FlattenToBytes(recover [
       "/a/b/c"; recover [as U8: 0; 0] end
       ",i"; recover [as U8: 0; 0] end
       recover [as U8: 0x3E; 0xAD; 0xBE; 0xEF] end
@@ -100,7 +100,7 @@ class iso _TestDecodeF32 is UnitTest
   fun name(): String => "poscy/f32_decode"
 
   fun apply(h: TestHelper) ? =>
-    let b = _FlattenToBytes(recover [
+    let b = FlattenToBytes(recover [
       "/a/b/c"; recover [as U8: 0; 0] end
       ",f"; recover [as U8: 0; 0] end
       recover [as U8: 66; 202; 163; 215] end
@@ -118,7 +118,7 @@ class iso _TestDecodeBlob is UnitTest
   fun name(): String => "poscy/blob_decode"
 
   fun apply(h: TestHelper) ? =>
-    let b = _FlattenToBytes(recover [
+    let b = FlattenToBytes(recover [
       "/a/b/c"; recover [as U8: 0; 0] end
       ",b"; recover [as U8: 0; 0] end
       recover [as U8: 0; 0; 0; 4] end

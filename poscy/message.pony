@@ -12,7 +12,7 @@ class val OSCMessage
     arguments = arguments'
 
   fun encode(writer: Writer ref = Writer,
-    encoder: _BasicEncoder = _BasicEncoder): Array[U8] val ?
+    encoder: Encoder = BasicEncoder): Array[U8] val ?
   =>
     let types: String trn = recover String end
 
@@ -29,7 +29,7 @@ class val OSCMessage
       encoder(consume types, writer)?
     end
     writer.writev(consume data)
-    _FlattenToBytes(writer.done())
+    FlattenToBytes(writer.done())
 
   fun string(): String iso ^ =>
     let s = recover iso String end

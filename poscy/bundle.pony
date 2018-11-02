@@ -16,7 +16,7 @@ class val OSCBundle
     elements = elements'
 
   fun encode(writer: Writer ref = Writer,
-    encoder: _BasicEncoder = _BasicEncoder): Array[U8] val ?
+    encoder: Encoder = BasicEncoder): Array[U8] val ?
   =>
     for e in elements.values() do
       let enc = e.encode()?
@@ -29,7 +29,7 @@ class val OSCBundle
     encoder(timetag, writer)?
     writer.writev(encoded_elements)
 
-    _FlattenToBytes(writer.done())
+    FlattenToBytes(writer.done())
 
 primitive OSCBundleDecoder
   fun apply(reader: Reader, bundle_size: USize): OSCBundle ? =>

@@ -1,9 +1,9 @@
 use "buffered"
 
-interface Encoder
+interface val Encoder
   fun apply(item: Any val, w: Writer): String ?
 
-primitive _BasicEncoder
+primitive BasicEncoder
   fun apply(item: Any val, w: Writer): String ? =>
     match item
     | let s: String =>
@@ -75,7 +75,7 @@ primitive _BasicEncoder
       end
     end
 
-primitive _FlattenToBytes
+primitive FlattenToBytes
   fun apply(bsa: Array[ByteSeq] val): Array[U8] val =>
     let a: Array[U8] trn = recover a.create() end
     for bs in bsa.values() do

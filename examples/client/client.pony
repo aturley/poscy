@@ -1,5 +1,4 @@
 use "../../poscy"
-use "debug"
 use "promises"
 
 actor Main
