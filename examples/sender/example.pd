@@ -1,0 +1,11 @@
+#N canvas 39 -2141 450 300 10;
+#X obj 127 113 netreceive -u -b;
+#X msg 127 84 listen 8989;
+#X obj 127 142 oscparse;
+#X obj 127 171 print parse-output;
+#X text 99 8 This program listens for incoming OSC messages from a
+UDP connection on port 8989 If you run the Pony program in this directory
+it will send a message to that port.;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
